@@ -1,0 +1,38 @@
+﻿@model IEnumerable<HelpMyCloset.Models.Clothing>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create") |
+    <a href="/Clothings">Back to All Clothes</a>
+</p>
+@foreach (var item in Model)
+{
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </h3>
+
+                <img class="thumb-img" src="~/Content/Images/@Html.Raw(item.Photo)" />
+
+
+                <p>
+                    @Html.ActionLink("Details", "Details", new { id = item.ClothingID },
+                   new { @class = "btn btn-primary" })
+
+                </p>
+
+            </div>
+        </div>
+
+        @Html.ActionLink("Edit", "Edit", new { id = item.ClothingID }) |
+
+        @Html.ActionLink("Delete", "Delete", new { id = item.ClothingID })
+    </div>
+}

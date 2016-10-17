@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ClothesDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Clothing">
+    <Key>
+      <PropertyRef Name="ClothingID" />
+    </Key>
+    <Property Name="ClothingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Photo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Color" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SeasonID" Type="int" Nullable="false" />
+    <Property Name="Occassion" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClothingTypes">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Seasons">
+    <Key>
+      <PropertyRef Name="SeasonID" />
+    </Key>
+    <Property Name="SeasonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SeasonName" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Clothing_ClothingTypes">
+    <End Role="ClothingTypes" Type="Self.ClothingTypes" Multiplicity="1" />
+    <End Role="Clothing" Type="Self.Clothing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClothingTypes">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="Clothing">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Clothing_Seasons">
+    <End Role="Seasons" Type="Self.Seasons" Multiplicity="1" />
+    <End Role="Clothing" Type="Self.Clothing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Seasons">
+        <PropertyRef Name="SeasonID" />
+      </Principal>
+      <Dependent Role="Clothing">
+        <PropertyRef Name="SeasonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ClothesDBModelStoreContainer">
+    <EntitySet Name="Clothing" EntityType="Self.Clothing" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClothingTypes" EntityType="Self.ClothingTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Seasons" EntityType="Self.Seasons" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Clothing_ClothingTypes" Association="Self.FK_Clothing_ClothingTypes">
+      <End Role="ClothingTypes" EntitySet="ClothingTypes" />
+      <End Role="Clothing" EntitySet="Clothing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Clothing_Seasons" Association="Self.FK_Clothing_Seasons">
+      <End Role="Seasons" EntitySet="Seasons" />
+      <End Role="Clothing" EntitySet="Clothing" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
